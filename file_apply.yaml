@@ -1,0 +1,8 @@
+agent_id: example-agent
+tool: http
+operation: get
+params:
+  url: https://example.com
+context:
+  source: examples/file_apply.yaml
+
