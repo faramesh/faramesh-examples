@@ -1,74 +1,62 @@
 # Faramesh Examples
 
-Example code demonstrating how to use Faramesh with various AI frameworks and tools.
+Runnable examples for governing AI agent tool calls with [Faramesh](https://github.com/faramesh/faramesh-core).
 
-## Examples
+## Prerequisites
 
-### Framework Integrations
+```bash
+pip install faramesh
+faramesh serve        # starts server at http://localhost:8000
+```
 
-- **langchain/** - LangChain integration examples
-- **langgraph/** - LangGraph integration examples
-- **llamaindex/** - LlamaIndex integration examples
-- **crewai/** - CrewAI integration examples
-- **autogen/** - AutoGen integration examples
-- **mcp/** - MCP (Model Context Protocol) integration examples
+---
 
-### Basic Examples
+## Framework examples
 
-- **basic_submit.py** - Basic Python SDK example
-- **basic_submit.js** - Basic Node.js SDK example
-- **sdk_batch_submit.py** - Batch submission example
-- **sdk_submit_and_wait.py** - Submit and wait example
-- **sdk_policy_builder.py** - Policy builder example
+| Directory | Framework | Run |
+|---|---|---|
+| [langchain/](langchain/) | LangChain | `python langchain/governed_agent.py` |
+| [crewai/](crewai/) | CrewAI | `python crewai/governed_agent.py` |
+| [autogen/](autogen/) | AutoGen | `python autogen/governed_agent.py` |
+| [mcp/](mcp/) | MCP | `python mcp/governed_agent.py` |
+| [langgraph/](langgraph/) | LangGraph | `python langgraph/governed_agent.py` |
+| [llamaindex/](llamaindex/) | LlamaIndex | `python llamaindex/governed_agent.py` |
 
-### Gated Execution Examples
+Every example wraps tools with one line:
 
-- **gated_execution.py** - Non-bypassable execution gate pattern (Python)
-- **gated_execution.js** - Non-bypassable execution gate pattern (Node.js)
+```python
+from faramesh.integrations import govern
 
-### Docker
+tool = govern(YourTool(), agent_id="my-agent")
+```
 
-- **docker/** - Docker deployment examples
+---
 
-### Action Files
+## Basic SDK examples
 
-- **file_apply.yaml** - Example action YAML file
-- **http_action.json** - Example action JSON file
+| File | What it shows |
+|---|---|
+| [basic_submit.py](basic_submit.py) | Submit a single action (Python) |
+| [basic_submit.js](basic_submit.js) | Submit a single action (Node.js) |
+| [gated_execution.py](gated_execution.py) | Non-bypassable execution gate (Python) |
+| [gated_execution.js](gated_execution.js) | Non-bypassable execution gate (Node.js) |
+| [sdk_submit_and_wait.py](sdk_submit_and_wait.py) | Submit action and wait for approval |
+| [sdk_batch_submit.py](sdk_batch_submit.py) | Submit multiple actions |
+| [sdk_policy_builder.py](sdk_policy_builder.py) | Build policies in Python |
 
-## Getting Started
+---
 
-1. Install Faramesh:
-   ```bash
-   pip install faramesh
-   # or for Node.js
-   npm install @faramesh/sdk
-   ```
+## Docker
 
-2. Start the Faramesh server:
-   ```bash
-   faramesh serve
-   ```
+```bash
+cd docker
+docker compose up
+```
 
-3. Run an example:
-   ```bash
-   python examples/langchain/governed_agent.py
-   ```
+See [docker/README.md](docker/README.md).
 
-## Documentation
+---
 
-Full documentation: https://github.com/faramesh/faramesh-docs
+## Docs
 
-## Repository
-
-**Source**: https://github.com/faramesh/faramesh-examples
-
-## Related Repositories
-
-- **Main Repository**: https://github.com/faramesh/faramesh-core
-- **Python SDK**: https://github.com/faramesh/faramesh-python-sdk
-- **Node.js SDK**: https://github.com/faramesh/faramesh-node-sdk
-- **Documentation**: https://github.com/faramesh/faramesh-docs
-
-## License
-
-Elastic License 2.0
+Full documentation: [faramesh-docs](https://github.com/faramesh/faramesh-docs) · [faramesh.dev](https://faramesh.dev)
