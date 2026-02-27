@@ -36,13 +36,13 @@ tool = govern(YourTool(), agent_id="my-agent")
 
 | File | What it shows |
 |---|---|
-| [basic_submit.py](basic_submit.py) | Submit a single action (Python) |
-| [basic_submit.js](basic_submit.js) | Submit a single action (Node.js) |
-| [gated_execution.py](gated_execution.py) | Non-bypassable execution gate (Python) |
-| [gated_execution.js](gated_execution.js) | Non-bypassable execution gate (Node.js) |
-| [sdk_submit_and_wait.py](sdk_submit_and_wait.py) | Submit action and wait for approval |
-| [sdk_batch_submit.py](sdk_batch_submit.py) | Submit multiple actions |
-| [sdk_policy_builder.py](sdk_policy_builder.py) | Build policies in Python |
+| [basic_submit.py](standalone/basic_submit.py) | Submit a single action (Python) |
+| [basic_submit.js](standalone/basic_submit.js) | Submit a single action (Node.js) |
+| [gated_execution.py](standalone/gated_execution.py) | Non-bypassable execution gate (Python) |
+| [gated_execution.js](standalone/gated_execution.js) | Non-bypassable execution gate (Node.js) |
+| [sdk_submit_and_wait.py](standalone/sdk_submit_and_wait.py) | Submit action and wait for approval |
+| [sdk_batch_submit.py](standalone/sdk_batch_submit.py) | Submit multiple actions |
+| [sdk_policy_builder.py](standalone/sdk_policy_builder.py) | Build policies in Python |
 
 ---
 
