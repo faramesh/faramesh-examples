@@ -2,55 +2,49 @@
 
 Runnable examples for governing AI agent tool calls with [Faramesh](https://github.com/faramesh/faramesh-core).
 
-## Installation & Quickstart
+## Installation
 
-> **Note:** The PyPI package may lag behind. Install directly from source for the latest version.
+> **The PyPI package is not yet updated. Install from source.**
 
-### Option A — Install from source (recommended)
+### Fastest — clone and run (no `pip install` needed)
 
 ```bash
-# Clone core and install in editable mode
+# 1. Get the core server
 git clone https://github.com/faramesh/faramesh-core.git
-cd faramesh-core
 
-# with uv (fastest)
-uv pip install -e ".[dev]"
-
-# or with pip
-pip install -e ".[dev]"
-
-# Start the server
-faramesh serve
-# → http://localhost:8000
-```
-
-### Option B — Install from GitHub with pip
-
-```bash
-pip install "git+https://github.com/faramesh/faramesh-core.git"
-faramesh serve
-```
-
-### Option C — Run the server directly without installing
-
-```bash
-git clone https://github.com/faramesh/faramesh-core.git
-cd faramesh-core
-pip install fastapi uvicorn pyyaml pydantic pydantic-settings requests
-python -m uvicorn faramesh.server.main:app --host 0.0.0.0 --port 8000
-```
-
-Then clone this examples repo and run any example:
-
-```bash
+# 2. Get the examples
 git clone https://github.com/faramesh/faramesh-examples.git
-cd faramesh-examples
 
-# Point examples at the local core source if not installed
-export PYTHONPATH=/path/to/faramesh-core/src
+# 3. Point examples at the source (no install step)
+export PYTHONPATH=$(pwd)/faramesh-core/src
 
+# 4. Start the server
+cd faramesh-core
+python -m uvicorn faramesh.server.main:app --host 0.0.0.0 --port 8000
+
+# 5. In a second terminal, run any example
+cd ../faramesh-examples
 python quickstart/quick_demo.py
 ```
+
+### With uv (recommended if you have uv)
+
+```bash
+git clone https://github.com/faramesh/faramesh-core.git
+cd faramesh-core
+uv pip install -e .
+faramesh serve
+```
+
+### With pip editable install
+
+```bash
+git clone https://github.com/faramesh/faramesh-core.git
+pip install -e ./faramesh-core
+faramesh serve
+```
+
+All three approaches work. The examples automatically detect `faramesh-core/src` as a sibling directory if it is not installed — so the `PYTHONPATH` export in option 1 is all you need.
 
 ---
 
