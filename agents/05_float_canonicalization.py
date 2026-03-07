@@ -12,6 +12,35 @@ Scenario:
 
 Required Policy: Any policy with amount-based rules
 """
+import sys, os as _os
+from pathlib import Path as _Path
+
+# --- faramesh source resolution ---
+# Priority: 1) installed package  2) PYTHONPATH env  3) sibling faramesh-core/src
+def _add_faramesh_src():
+    try:
+        import faramesh  # already installed or on PYTHONPATH
+        return
+    except ImportError:
+        pass
+    # Look for a sibling faramesh-core clone
+    _here = _Path(__file__).resolve().parent
+    for _candidate in [
+        _here.parent / "faramesh-core" / "src",
+        _here.parent.parent / "faramesh-core" / "src",
+        _Path.home() / "faramesh-core" / "src",
+    ]:
+        if (_candidate / "faramesh").is_dir():
+            sys.path.insert(0, str(_candidate))
+            return
+    print("\n[faramesh] Could not find faramesh. Run:")
+    print("  git clone https://github.com/faramesh/faramesh-core.git")
+    print("  pip install -e ./faramesh-core  OR  export PYTHONPATH=./faramesh-core/src")
+    sys.exit(1)
+
+_add_faramesh_src()
+# --- end faramesh source resolution ---
+
 
 import os
 import sys
@@ -26,10 +55,6 @@ sys.path.insert(
         os.path.join(os.path.dirname(__file__), "..", "faramesh-python-sdk-code")
     ),
 )
-sys.path.insert(
-    0,
-    os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "..", "faramesh-horizon-code", "src")
     ),
 )
 

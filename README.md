@@ -2,11 +2,54 @@
 
 Runnable examples for governing AI agent tool calls with [Faramesh](https://github.com/faramesh/faramesh-core).
 
-## Prerequisites
+## Installation & Quickstart
+
+> **Note:** The PyPI package may lag behind. Install directly from source for the latest version.
+
+### Option A — Install from source (recommended)
 
 ```bash
-pip install faramesh
-faramesh serve        # starts server at http://localhost:8000
+# Clone core and install in editable mode
+git clone https://github.com/faramesh/faramesh-core.git
+cd faramesh-core
+
+# with uv (fastest)
+uv pip install -e ".[dev]"
+
+# or with pip
+pip install -e ".[dev]"
+
+# Start the server
+faramesh serve
+# → http://localhost:8000
+```
+
+### Option B — Install from GitHub with pip
+
+```bash
+pip install "git+https://github.com/faramesh/faramesh-core.git"
+faramesh serve
+```
+
+### Option C — Run the server directly without installing
+
+```bash
+git clone https://github.com/faramesh/faramesh-core.git
+cd faramesh-core
+pip install fastapi uvicorn pyyaml pydantic pydantic-settings requests
+python -m uvicorn faramesh.server.main:app --host 0.0.0.0 --port 8000
+```
+
+Then clone this examples repo and run any example:
+
+```bash
+git clone https://github.com/faramesh/faramesh-examples.git
+cd faramesh-examples
+
+# Point examples at the local core source if not installed
+export PYTHONPATH=/path/to/faramesh-core/src
+
+python quickstart/quick_demo.py
 ```
 
 ---

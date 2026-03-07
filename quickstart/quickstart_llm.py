@@ -4,13 +4,41 @@
 Real LangChain agent with real LLM reasoning + Faramesh governance.
 Model: allenai/molmo-2-8b:free (no cost)
 """
+import sys, os as _os
+from pathlib import Path as _Path
+
+# --- faramesh source resolution ---
+# Priority: 1) installed package  2) PYTHONPATH env  3) sibling faramesh-core/src
+def _add_faramesh_src():
+    try:
+        import faramesh  # already installed or on PYTHONPATH
+        return
+    except ImportError:
+        pass
+    # Look for a sibling faramesh-core clone
+    _here = _Path(__file__).resolve().parent
+    for _candidate in [
+        _here.parent / "faramesh-core" / "src",
+        _here.parent.parent / "faramesh-core" / "src",
+        _Path.home() / "faramesh-core" / "src",
+    ]:
+        if (_candidate / "faramesh").is_dir():
+            sys.path.insert(0, str(_candidate))
+            return
+    print("\n[faramesh] Could not find faramesh. Run:")
+    print("  git clone https://github.com/faramesh/faramesh-core.git")
+    print("  pip install -e ./faramesh-core  OR  export PYTHONPATH=./faramesh-core/src")
+    sys.exit(1)
+
+_add_faramesh_src()
+# --- end faramesh source resolution ---
+
 import os
 import sys
 import time
 from pathlib import Path
 
 # Add Faramesh to path
-sys.path.insert(0, str(Path(__file__).parent / "faramesh-horizon-code" / "src"))
 
 
 try:
@@ -118,7 +146,7 @@ def send_action(action_obj: dict) -> dict:
             )
         elif "Connection" in error_msg or "refused" in error_msg.lower():
             raise Exception(
-                "HTTP Connection Failed - API not running on port 8000. Start it with: /Users/xquark_home/Faramesh-Nexus/.venv/bin/python -m uvicorn faramesh.server.main:app --host 0.0.0.0 --port 8000"
+                "HTTP Connection Failed - API not running on port 8000. Start it with: faramesh serve"
             )
         else:
             raise Exception(f"API Error: {error_msg}\n{traceback.format_exc()}")

@@ -13,9 +13,16 @@ These examples demonstrate interactive AI agents governed by Faramesh, where the
 ## Quick Start
 
 ```bash
-pip install faramesh langchain openai
-export OPENROUTER_API_KEY=your_key
-python agent_simple.py
+# Install faramesh from source (PyPI may be behind)
+git clone https://github.com/faramesh/faramesh-core.git
+pip install -e ./faramesh-core   # or: export PYTHONPATH=$(pwd)/faramesh-core/src
+
+# Start the server
+faramesh serve
+
+# Run an example
+export OPENROUTER_API_KEY=sk-or-v1-...
+python interactive/agent_simple.py
 ```
 
 The agent will prompt for user input and submit actions through Faramesh for policy evaluation before execution.

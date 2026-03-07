@@ -9,6 +9,35 @@ Usage:
     SHOPIFY_ACCESS_TOKEN=... SHOPIFY_STORE_DOMAIN=... OPENROUTER_API_KEY=... \
     python demo_ecom_agent.py
 """
+import sys, os as _os
+from pathlib import Path as _Path
+
+# --- faramesh source resolution ---
+# Priority: 1) installed package  2) PYTHONPATH env  3) sibling faramesh-core/src
+def _add_faramesh_src():
+    try:
+        import faramesh  # already installed or on PYTHONPATH
+        return
+    except ImportError:
+        pass
+    # Look for a sibling faramesh-core clone
+    _here = _Path(__file__).resolve().parent
+    for _candidate in [
+        _here.parent / "faramesh-core" / "src",
+        _here.parent.parent / "faramesh-core" / "src",
+        _Path.home() / "faramesh-core" / "src",
+    ]:
+        if (_candidate / "faramesh").is_dir():
+            sys.path.insert(0, str(_candidate))
+            return
+    print("\n[faramesh] Could not find faramesh. Run:")
+    print("  git clone https://github.com/faramesh/faramesh-core.git")
+    print("  pip install -e ./faramesh-core  OR  export PYTHONPATH=./faramesh-core/src")
+    sys.exit(1)
+
+_add_faramesh_src()
+# --- end faramesh source resolution ---
+
 
 import os
 import sys
@@ -20,11 +49,8 @@ from datetime import datetime, timedelta, timezone
 from typing import Dict, Any, Optional
 from pathlib import Path
 
-# Add faramesh-horizon-code/src to path if needed (for "from faramesh import ...")
+# faramesh is resolved via _add_faramesh_src() above
 _script_dir = Path(__file__).resolve().parent
-_faramesh_src = _script_dir / "faramesh-horizon-code" / "src"
-if _faramesh_src.exists() and str(_faramesh_src) not in sys.path:
-    sys.path.insert(0, str(_faramesh_src))
 
 try:
     import httpx
@@ -38,7 +64,7 @@ except ImportError:
 try:
     from faramesh import submit_action, get_action, configure
 except ImportError:
-    print("\033[91m❌ Faramesh SDK not installed. pip install -e faramesh-horizon-code\033[0m")
+    print("\033[91m❌ Faramesh SDK not installed. git clone https://github.com/faramesh/faramesh-core.git && pip install -e ./faramesh-core\033[0m")
     sys.exit(1)
 
 try:
