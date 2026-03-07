@@ -4,47 +4,44 @@ Runnable examples for governing AI agent tool calls with [Faramesh](https://gith
 
 ## Installation
 
-> **The PyPI package is not yet updated. Install from source.**
+> **The PyPI package is not updated yet — install from the cloned source instead.**
 
-### Fastest — clone and run (no `pip install` needed)
+### With uv (recommended)
 
 ```bash
-# 1. Get the core server
 git clone https://github.com/faramesh/faramesh-core.git
+cd faramesh-core
+uv sync
+uv run faramesh serve
+```
 
-# 2. Get the examples
+### With pip
+
+```bash
+git clone https://github.com/faramesh/faramesh-core.git
+cd faramesh-core
+python3 -m pip install -e .
+faramesh serve
+```
+
+### In a virtual environment (no global installs)
+
+```bash
+git clone https://github.com/faramesh/faramesh-core.git
+cd faramesh-core
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+faramesh serve
+```
+
+Then run any example:
+
+```bash
 git clone https://github.com/faramesh/faramesh-examples.git
-
-# 3. Point examples at the source (no install step)
-export PYTHONPATH=$(pwd)/faramesh-core/src
-
-# 4. Start the server
-cd faramesh-core
-python -m uvicorn faramesh.server.main:app --host 0.0.0.0 --port 8000
-
-# 5. In a second terminal, run any example
-cd ../faramesh-examples
-python quickstart/quick_demo.py
+cd faramesh-examples
+python3 quickstart/quick_demo.py
 ```
-
-### With uv (recommended if you have uv)
-
-```bash
-git clone https://github.com/faramesh/faramesh-core.git
-cd faramesh-core
-uv pip install -e .
-faramesh serve
-```
-
-### With pip editable install
-
-```bash
-git clone https://github.com/faramesh/faramesh-core.git
-pip install -e ./faramesh-core
-faramesh serve
-```
-
-All three approaches work. The examples automatically detect `faramesh-core/src` as a sibling directory if it is not installed — so the `PYTHONPATH` export in option 1 is all you need.
 
 ---
 
